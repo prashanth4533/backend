@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register Vehicle</title>
+    <style>
+        /* General Styles */
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Poppins', sans-serif;
+            background-image: url('https://via.placeholder.com/1920x1080?text=Background+Image'); /* Replace with your image URL */
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            color: white;
+        }
+
+        /* Navigation Bar */
+        .nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 20px;
+            background: rgba(0, 0, 0, 0.5);
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+        }
+
+        .nav .btn {
+            padding: 10px 15px;
+            background: #66a6ff;
+            border: none;
+            border-radius: 5px;
+            color: white;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+
+        .nav .btn:hover {
+            background: #0056b3;
+            transform: scale(1.05);
+        }
+
+        /* Main Content */
+        main {
+            min-height: 100vh;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        /* Register Vehicle Form */
+        .form-box {
+            background: rgba(255, 255, 255, 0.8);
+            padding: 30px 25px;
+            border-radius: 10px;
+            box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2);
+            max-width: 400px;
+            margin: 0 auto 30px;
+        }
+
+        .form-box h3 {
+            font-size: 24px;
+            margin-bottom: 15px;
+            color: #333;
+            text-align: center;
+        }
+
+        .form-box label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: #555;
+            font-size: 14px;
+        }
+
+        .form-box input,
+        .form-box select {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 20px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+            background: #f9f9f9;
+        }
+
+        .form-box button {
+            background: #66a6ff;
+            color: white;
+            border: none;
+            padding: 12px 15px;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 100%;
+            transition: background 0.3s ease;
+        }
+
+        .form-box button:hover {
+            background: #0056b3;
+        }
+
+        /* Vehicle Display */
+        .vehicle-display {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+        }
+
+        .vehicle-box {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 10px;
+            box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2);
+            max-width: 45%;
+            width: 100%;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            cursor: pointer;
+            opacity: 0;
+            animation: fadeIn 0.6s ease-out forwards;
+        }
+
+        .vehicle-box img {
+            width: 250px;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 10px;
+        }
+
+        .vehicle-details {
+            text-align: left;
+            flex: 1;
+        }
+
+        .vehicle-details h4 {
+            font-size: 22px;
+            margin-bottom: 10px;
+            color: #333;
+        }
+
+        .vehicle-details p {
+            font-size: 16px;
+            color: #555;
+            margin-bottom: 5px;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            justify-content: center;
+            align-items: center;
+            animation: fadeInModal 0.3s ease;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            width: 500px;
+            max-width: 90%;
+            animation: scaleUp 0.4s ease;
+        }
+
+        .modal-content h3 {
+            margin-bottom: 20px;
+            color: #333;
+            font-size: 24px;
+        }
+
+        .modal-content p {
+            margin-bottom: 10px;
+            color: #555;
+            font-size: 16px;
+        }
+
+        .modal-content img {
+            width: 100%;
+            height: auto;
+            margin-top: 20px;
+            border-radius: 10px;
+        }
+
+        .close-btn {
+            background: #ff3333;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s;
+        }
+
+        .close-btn:hover {
+            background: #cc0000;
+        }
+
+        @keyframes fadeInModal {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes scaleUp {
+            from {
+                transform: scale(0.8);
+            }
+            to {
+                transform: scale(1);
+            }
+        }
+
+        /* Success Message */
+        .success-message {
+            display: none;
+            background: #28a745;
+            color: white;
+            padding: 20px;
+            text-align: center;
+            font-size: 18px;
+            border-radius: 5px;
+            margin-top: 20px;
+            animation: fadeInMessage 0.6s ease-in-out;
+        }
+
+        @keyframes fadeInMessage {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .vehicle-box {
+                flex-direction: column;
+                max-width: 100%;
+                text-align: center;
+            }
+
+            .vehicle-box img {
+                margin-bottom: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="nav">
+        <div class="logo">
+            <p><a href="home.php">Logo</a></p>
+        </div>
+        <div class="right-links">
+            <a href="php/logout.php"><button class="btn">Log Out</button></a>
+        </div>
+    </div>
+
+    <main>
+        <!-- Register Vehicle Form -->
+        <div class="form-box">
+            <h3>Register Vehicle</h3>
+            <form id="vehicleDetailsForm">
+                <label for="vehicleType">Vehicle Type:</label>
+                <select id="vehicleType" name="vehicleType" required>
+                    <option value="Car">Car</option>
+                    <option value="Truck">Truck</option>
+                    <option value="Bus">Bus</option>
+                </select>
+
+                <label for="vehicleModel">Vehicle Model:</label>
+                <input type="text" id="vehicleModel" name="vehicleModel" placeholder="e.g., Toyota" required>
+
+                <label for="modelYear">Model Year:</label>
+                <input type="number" id="modelYear" name="modelYear" placeholder="e.g., 2023" required>
+
+                <label for="rcNumber">RC Number:</label>
+                <input type="text" id="rcNumber" name="rcNumber" placeholder="e.g., ABC1234" required>
+
+                <label for="licenseNumber">Driving License:</label>
+                <input type="text" id="licenseNumber" name="licenseNumber" placeholder="e.g., DL123456" required>
+
+                <button type="submit">Submit</button>
+            </form>
+
+            <div class="success-message" id="successMessage">
+                Vehicle Registered Successfully!
+            </div>
+        </div>
+
+        <!-- Display Vehicles -->
+        <div class="vehicle-display" id="vehicleDisplay"></div>
+    </main>
+
+    <!-- Modal -->
+    <div class="modal" id="vehicleModal">
+        <div class="modal-content" id="modalContent">
+            <h3>Vehicle Details</h3>
+            <button class="close-btn">Close</button>
+        </div>
+    </div>
+
+    <script>
+        const vehicleDetailsForm = document.getElementById('vehicleDetailsForm');
+        const vehicleDisplay = document.getElementById('vehicleDisplay');
+        const vehicleModal = document.getElementById('vehicleModal');
+        const modalContent = document.getElementById('modalContent');
+        const closeModalBtn = document.querySelector('.close-btn');
+        const successMessage = document.getElementById('successMessage');
+
+        vehicleDetailsForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+
+            const vehicleType = document.getElementById('vehicleType').value;
+            const vehicleModel = document.getElementById('vehicleModel').value;
+            const modelYear = document.getElementById('modelYear').value;
+            const rcNumber = document.getElementById('rcNumber').value;
+            const licenseNumber = document.getElementById('licenseNumber').value;
+
+            const vehicleBox = document.createElement('div');
+            vehicleBox.classList.add('vehicle-box');
+            vehicleBox.style.animation = 'fadeIn 0.6s ease-out forwards';
+
+            let vehicleImage;
+            if (vehicleType === 'Car') {
+                vehicleImage = 'https://www.shutterstock.com/image-vector/classic-car-cartoon-on-white-600nw-2508906945.jpg';
+            } else if (vehicleType === 'Truck') {
+                vehicleImage = 'https://www.shutterstock.com/image-vector/blue-box-truck-red-cab-600nw-1832620102.jpg';
+            } else {
+                vehicleImage = 'https://www.shutterstock.com/image-vector/red-city-buscartoon-bus-vector-600nw-2175056875.jpg';
+            }
+
+            vehicleBox.innerHTML = `
+                <img src="${vehicleImage}" alt="${vehicleType}">
+                <div class="vehicle-details">
+                    <h4>${vehicleType}</h4>
+                    <p><b>Model:</b> ${vehicleModel}</p>
+                    <p><b>Year:</b> ${modelYear}</p>
+                    <p><b>RC Number:</b> ${rcNumber}</p>
+                    <p><b>License:</b> ${licenseNumber}</p>
+                </div>
+            `;
+
+            vehicleBox.addEventListener('click', () => {
+                modalContent.innerHTML = `
+                    <h4>${vehicleType}</h4>
+                    <p><b>Model:</b> ${vehicleModel}</p>
+                    <p><b>Year:</b> ${modelYear}</p>
+                    <p><b>RC Number:</b> ${rcNumber}</p>
+                    <p><b>License:</b> ${licenseNumber}</p>
+                    <img src="${vehicleImage}" alt="${vehicleType}" style="width: 100%; height: auto; border-radius: 10px;">
+                `;
+                vehicleModal.style.display = 'flex';
+            });
+
+            vehicleDisplay.appendChild(vehicleBox);
+
+            // Show success message
+            successMessage.style.display = 'block';
+            setTimeout(() => {
+                successMessage.style.display = 'none';
+            }, 3000);
+
+            vehicleDetailsForm.reset();
+        });
+
+        closeModalBtn.addEventListener('click', () => {
+            vehicleModal.style.display = 'none';
+        });
+
+        window.addEventListener('click', (e) => {
+            if (e.target === vehicleModal) {
+                vehicleModal.style.display = 'none';
+            }
+        });
+    </script>
+</body>
+</html>
+<style>
+    body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Poppins', sans-serif;
+    background: #ededed url('https://images.pexels.com/photos/15610994/pexels-photo-15610994.jpeg') no-repeat center center fixed;
+    background-size: cover;
+}
+
+</style>
